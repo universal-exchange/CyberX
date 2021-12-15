@@ -1,2 +1,0 @@
-# CyberX
-Distributed Computing Framework.
