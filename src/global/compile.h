@@ -34,6 +34,9 @@
 
 //---------- 功能组件 ----------//
 
+#define CYBERX_SYSCFG_EXP
+//#define CYBERX_SYSCFG_IMP
+
 #define CYBERX_MASTER_EXP
 //#define CYBERX_MASTER_IMP
 
@@ -69,6 +72,16 @@
 
 #ifdef CYBERX_SHARES_IMP
     #define CYBERX_SHARES_EXPIMP __declspec(dllimport)
+#endif
+
+//------------------------------//
+
+#ifdef CYBERX_SYSCFG_EXP
+    #define CYBERX_SYSCFG_EXPIMP __declspec(dllexport)
+#endif
+
+#ifdef CYBERX_SYSCFG_IMP
+    #define CYBERX_SYSCFG_EXPIMP __declspec(dllimport)
 #endif
 
 //------------------------------//
@@ -133,6 +146,10 @@
 
 #ifdef CYBERX_SHARES_EXP
     #define CYBERX_SHARES_EXPIMP __attribute__((visibility("default")))
+#endif
+
+#ifdef CYBERX_SYSCFG_EXP
+    #define CYBERX_SYSCFG_EXPIMP __attribute__((visibility("default")))
 #endif
 
 #ifdef CYBERX_MASTER_EXP

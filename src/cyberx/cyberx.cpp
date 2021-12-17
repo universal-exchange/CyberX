@@ -35,15 +35,24 @@
 #endif
 
 #include <syslog/syslog.h>
+#include <plugins/plugins.h>
 
 #include "global/define.h"
+#include "syscfg/syscfg.h"
+#include "master/master.h"
+#include "worker/worker.h"
 
-//#include "kernel/kernel.h"
-//#include "engine/engine.h"
-//#include "engine/engine_cuda.h"
+#include "cyberx.h"
 
 void SystemUninitialize() { // 在控制台事件和单例限制退出时调用会异常
 	try {
+		basicx::Plugins* plugins = basicx::Plugins::GetInstance(); // 02
+		if( plugins != nullptr ) {
+			plugins->~Plugins();
+		}
+
+		// SysCfg
+
 		basicx::SysLog_S* syslog = basicx::SysLog_S::GetInstance(); // 01
 		if( syslog != nullptr ) {
 			syslog->~SysLog_S();
@@ -107,20 +116,6 @@ bool SystemInitialize() {
 		syslog->LogPrint( basicx::syslog_level::c_info, log_cate, log_info );
 
 		std::this_thread::sleep_for( std::chrono::seconds( 1 ) ); // 避免 CMD 输出被打乱
-
-		//cyberx::Kernel kernel;
-		//kernel.Test_Barrier_Single();
-		//kernel.Test_Barrier_Double();
-		//kernel.Test_Digital_Simple();
-		//kernel.Test_Vanilla_American();
-		//kernel.Test_Vanilla_European();
-		//kernel.Test_Autocall_Booster();
-		//kernel.Test_Autocall_Phoenix();
-        //kernel.Test_Autocall_Snowball();
-        //kernel.Test_Stochastic_Model();
-
-        //cyberx::Engine_CUDA engine_cuda;
-        //engine_cuda.Test_CUDA();
 
 		// TODO：添加更多初始化任务
 

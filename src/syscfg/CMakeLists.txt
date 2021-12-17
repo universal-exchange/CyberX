@@ -18,16 +18,6 @@
 #
 # Be sure to retain the above copyright notice and conditions.
 
-IF (MSVC)
-	SET (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /INCLUDE:\"__tcmalloc\"")
-ELSEIF (CMAKE_CXX_COMPILER_ID MATCHES "GNU") # GCC
-	SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-free") # tcmalloc 相关
-ELSEIF (CMAKE_CXX_COMPILER_ID MATCHES "Clang") # Clang
-    # TODO:
-ELSEIF (CMAKE_CXX_COMPILER_ID MATCHES "Intel") # Intel C++
-    # TODO:
-ENDIF ()
-
 INCLUDE_DIRECTORIES (${Boost_INCLUDE_DIRS} "${SDKDIR_BASICX_INCLUDE}" "${PROJECT_SOURCE_DIR}")
 
 # Boost 的附加库目录会自动添加
@@ -43,19 +33,19 @@ IF (CMAKE_LINKTYPE_SHARED)
     ENDIF ()
 ENDIF ()
 
-FILE (GLOB WORKER_HEADER_FILES "./*.h")
-FILE (GLOB WORKER_SOURCE_FILES "./*.cpp")
+FILE (GLOB SYSCFG_HEADER_FILES "./*.h")
+FILE (GLOB SYSCFG_SOURCE_FILES "./*.cpp")
 
-SOURCE_GROUP ("Header Files" FILES ${WORKER_HEADER_FILES})
-SOURCE_GROUP ("Source Files" FILES ${WORKER_SOURCE_FILES})
+SOURCE_GROUP ("Header Files" FILES ${SYSCFG_HEADER_FILES})
+SOURCE_GROUP ("Source Files" FILES ${SYSCFG_SOURCE_FILES})
 
 IF (CMAKE_LINKTYPE_SHARED)
-    ADD_LIBRARY ("worker" SHARED ${WORKER_HEADER_FILES} ${WORKER_SOURCE_FILES})
+    ADD_LIBRARY ("syscfg" SHARED ${SYSCFG_HEADER_FILES} ${SYSCFG_SOURCE_FILES})
     IF (WIN32)
-        TARGET_LINK_LIBRARIES ("worker" libtcmalloc.lib common.lib syslog.lib network.lib plugins.lib global.lib shares.lib)
+        TARGET_LINK_LIBRARIES ("syscfg" common.lib)
     ELSEIF ((UNIX) OR (APPLE))
-        TARGET_LINK_LIBRARIES ("worker" -lunwind -ltcmalloc libcommon.a -lsyslog -lnetwork -lplugins -lglobal -lshares)
+        TARGET_LINK_LIBRARIES ("syscfg" libcommon.a)
     ENDIF ()
 ELSE ()
-    ADD_LIBRARY ("worker" ${WORKER_HEADER_FILES} ${WORKER_SOURCE_FILES})
+    ADD_LIBRARY ("syscfg" ${SYSCFG_HEADER_FILES} ${SYSCFG_SOURCE_FILES})
 ENDIF ()

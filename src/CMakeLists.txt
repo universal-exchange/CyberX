@@ -363,6 +363,7 @@ SOURCE_GROUP ("Source Files" FILES ${CYBERX_SOURCE_FILES})
 ADD_SUBDIRECTORY ("${PROJECT_SOURCE_DIR}/global")
 ADD_SUBDIRECTORY ("${PROJECT_SOURCE_DIR}/master")
 ADD_SUBDIRECTORY ("${PROJECT_SOURCE_DIR}/shares")
+ADD_SUBDIRECTORY ("${PROJECT_SOURCE_DIR}/syscfg")
 ADD_SUBDIRECTORY ("${PROJECT_SOURCE_DIR}/worker")
 # ADD_SUBDIRECTORY ("${PROJECT_SOURCE_DIR}/plugin")
 # ADD_SUBDIRECTORY ("${PROJECT_SOURCE_DIR}/cyberx_js")
@@ -392,16 +393,16 @@ ENDIF ()
 ADD_EXECUTABLE (${PROJECT_NAME} ${CYBERX_HEADER_FILES} ${CYBERX_SOURCE_FILES})
 
 IF (WIN32)
-    TARGET_LINK_LIBRARIES (${PROJECT_NAME} libtcmalloc.lib global.lib shares.lib common.lib syslog.lib)
+    TARGET_LINK_LIBRARIES (${PROJECT_NAME} libtcmalloc.lib common.lib syslog.lib plugins.lib global.lib shares.lib syscfg.lib master.lib worker.lib)
 ELSEIF ((UNIX) OR (APPLE))
     SET (THREADS_PREFER_PTHREAD_FLAG ON)
     FIND_PACKAGE (Threads REQUIRED)
     TARGET_LINK_LIBRARIES (${PROJECT_NAME} Threads::Threads) # -pthread
     # TARGET_LINK_LIBRARIES (${PROJECT_NAME} ${Boost_LIBRARIES}) # Linux 下显式添加 FIND_PACKAGE 中列出的 Boost 库
     IF (CMAKE_LINKTYPE_SHARED)
-        TARGET_LINK_LIBRARIES (${PROJECT_NAME} -lunwind -ltcmalloc -lglobal -lshares libcommon.a -lsyslog)
+        TARGET_LINK_LIBRARIES (${PROJECT_NAME} -lunwind -ltcmalloc libcommon.a -lsyslog -lplugins -lglobal -lshares -lsyscfg -lmaster -lworker)
     ELSE ()
-        TARGET_LINK_LIBRARIES (${PROJECT_NAME} libtcmalloc.a libglobal.a libshares.a libcommon.a libsyslog.a)
+        TARGET_LINK_LIBRARIES (${PROJECT_NAME} libtcmalloc.a libcommon.a libsyslog.a libplugins.a libglobal.a libshares.a libsyscfg.a libmaster.a libworker.a)
     ENDIF ()
 ENDIF ()
 
@@ -461,9 +462,12 @@ IF (WIN32)
         INSTALL (
             FILES "${SDKDIR_BASICX_LIBRARY_RELEASE}/libtcmalloc.dll" 
                   "${SDKDIR_BASICX_LIBRARY_RELEASE}/syslog.dll" 
+                  "${SDKDIR_BASICX_LIBRARY_RELEASE}/network.dll" 
+                  "${SDKDIR_BASICX_LIBRARY_RELEASE}/plugins.dll" 
                   "${PROJECT_BINARY_DIR}/runtime/${PATH_FLAG_MIDFOLDER}/global.dll" 
-                  "${PROJECT_BINARY_DIR}/runtime/${PATH_FLAG_MIDFOLDER}/master.dll" 
                   "${PROJECT_BINARY_DIR}/runtime/${PATH_FLAG_MIDFOLDER}/shares.dll" 
+                  "${PROJECT_BINARY_DIR}/runtime/${PATH_FLAG_MIDFOLDER}/syscfg.dll" 
+                  "${PROJECT_BINARY_DIR}/runtime/${PATH_FLAG_MIDFOLDER}/master.dll" 
                   "${PROJECT_BINARY_DIR}/runtime/${PATH_FLAG_MIDFOLDER}/worker.dll" 
             DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
         )
@@ -642,9 +646,12 @@ ELSEIF ((UNIX) OR (APPLE))
             FILES "${SDKDIR_BASICX_LIBRARY}/libunwind.so.8" 
                   "${SDKDIR_BASICX_LIBRARY}/libtcmalloc.so" 
                   "${SDKDIR_BASICX_LIBRARY}/libsyslog.so" 
+                  "${SDKDIR_BASICX_LIBRARY}/libnetwork.so" 
+                  "${SDKDIR_BASICX_LIBRARY}/libplugins.so" 
                   "${PROJECT_BINARY_DIR}/library/libglobal.so" 
-                  "${PROJECT_BINARY_DIR}/library/libmaster.so" 
                   "${PROJECT_BINARY_DIR}/library/libshares.so" 
+                  "${PROJECT_BINARY_DIR}/library/libsyscfg.so" 
+                  "${PROJECT_BINARY_DIR}/library/libmaster.so" 
                   "${PROJECT_BINARY_DIR}/library/libworker.so" 
             DESTINATION "${CMAKE_INSTALL_PREFIX}/bin"
             # PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE # 755

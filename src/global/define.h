@@ -27,7 +27,7 @@ namespace cyberx {
 	// 软件信息
 	#define DEF_APP_NAME "CyberX" // 系统英文名称
 	#define DEF_APP_NAME_CN "分 布 式 计 算 框 架" // 系统中文名称
-	#define DEF_APP_VERSION "V0.1.0-Beta Build 20211215" // 系统版本号
+	#define DEF_APP_VERSION "V0.1.0-Beta Build 20211217" // 系统版本号
 	#define DEF_APP_DEVELOPER "Developed by the X-Lab." // 开发者声明
 	#define DEF_APP_COMPANY "X-Lab (Shanghai) Co., Ltd." // 公司声明
 	#define DEF_APP_COPYRIGHT "Copyright 2021-2022 X-Lab All Rights Reserved." // 版权声明
