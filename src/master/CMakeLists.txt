@@ -28,7 +28,7 @@ ELSEIF (CMAKE_CXX_COMPILER_ID MATCHES "Intel") # Intel C++
     # TODO:
 ENDIF ()
 
-INCLUDE_DIRECTORIES (${Boost_INCLUDE_DIRS} "${SDKDIR_BASICX_INCLUDE}" "${PROJECT_SOURCE_DIR}")
+INCLUDE_DIRECTORIES (${Boost_INCLUDE_DIRS} "${PROJECT_SOURCE_DIR}" "${SDKDIR_BASICX_INCLUDE}") # SOURCE 先于 BASICX 避免 syscfg 模块冲突
 
 # Boost 的附加库目录会自动添加
 IF (CMAKE_LINKTYPE_SHARED)
@@ -52,9 +52,9 @@ SOURCE_GROUP ("Source Files" FILES ${MASTER_SOURCE_FILES})
 IF (CMAKE_LINKTYPE_SHARED)
     ADD_LIBRARY ("master" SHARED ${MASTER_HEADER_FILES} ${MASTER_SOURCE_FILES})
     IF (WIN32)
-        TARGET_LINK_LIBRARIES ("master" libtcmalloc.lib common.lib syslog.lib network.lib global.lib shares.lib)
+        TARGET_LINK_LIBRARIES ("master" libtcmalloc.lib common.lib syslog.lib network.lib global.lib shares.lib syscfg.lib)
     ELSEIF ((UNIX) OR (APPLE))
-        TARGET_LINK_LIBRARIES ("master" -lunwind -ltcmalloc libcommon.a -lsyslog -lnetwork -lglobal -lshares)
+        TARGET_LINK_LIBRARIES ("master" -lunwind -ltcmalloc libcommon.a -lsyslog -lnetwork -lglobal -lshares -lsyscfg)
     ENDIF ()
 ELSE ()
     ADD_LIBRARY ("master" ${MASTER_HEADER_FILES} ${MASTER_SOURCE_FILES})

@@ -79,8 +79,8 @@ namespace cyberx {
 	#define NW_MSG_FUNC_TYPE_MAX           65535 // 网络通信 功能 类型终止
 
 	// 模块功能定义
-    #define DEF_NODE_TYPE_MASTER 0 // 
-    #define DEF_NODE_TYPE_WORKER 1 // 
+    #define DEF_NODE_TYPE_MASTER 1 // 
+    #define DEF_NODE_TYPE_WORKER 2 // 
 
     //#define DEF_TYPE_AUTOCALL_BOOSTER         "booster" // Booster
     //#define DEF_TYPE_AUTOCALL_PHOENIX         "phoenix" // Phoenix

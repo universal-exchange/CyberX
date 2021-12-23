@@ -19,32 +19,18 @@
 * Be sure to retain the above copyright notice and conditions.
 */
 
-#ifndef CYBERX_WORKER_WORKER_H
-#define CYBERX_WORKER_WORKER_H
+#ifndef CYBERX_WORKER_STRUCT_H
+#define CYBERX_WORKER_STRUCT_H
 
-#include "global/compile.h"
+#include <common/assist.h>
+#include <syslog/syslog.h>
+#include <network/client.h>
+#include <plugins/plugins.h>
+
+#include "syscfg/syscfg.h"
 
 namespace cyberx {
 
-	class Worker_P;
-
-	class CYBERX_WORKER_EXPIMP Worker {
-	public:
-		Worker();
-		~Worker();
-
-	public:
-		static Worker* GetInstance();
-
-	public:
-		void Start();
-		void Stop();
-
-	private:
-		Worker_P* m_worker_p;
-		static Worker* m_instance;
-	};
-
 } // namespace cyberx
 
-#endif // CYBERX_WORKER_WORKER_H
+#endif // CYBERX_WORKER_STRUCT_H

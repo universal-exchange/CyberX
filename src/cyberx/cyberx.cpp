@@ -47,6 +47,16 @@
 
 void SystemUninitialize() { // 在控制台事件和单例限制退出时调用会异常
 	try {
+		cyberx::Worker* worker = cyberx::Worker::GetInstance(); // 04
+		if( worker != nullptr ) { // 这里调用 Stop 意义不大
+			worker->~Worker();
+		}
+
+		cyberx::Master* master = cyberx::Master::GetInstance(); // 04
+		if( master != nullptr ) { // 这里调用 Stop 意义不大
+			master->~Master();
+		}
+
 		basicx::Plugins* plugins = basicx::Plugins::GetInstance(); // 03
 		if( plugins != nullptr ) {
 			plugins->~Plugins();
@@ -118,6 +128,9 @@ bool SystemInitialize() {
 	cyberx::SysCfg_S* syscfg = cyberx::SysCfg_S::GetInstance();
 	basicx::Plugins* plugins = basicx::Plugins::GetInstance();
 
+	cyberx::Master* master = cyberx::Master::GetInstance();
+	cyberx::Worker* worker = cyberx::Worker::GetInstance();
+
     log_info = "开始系统初始化 ...\r\n";
 	syslog->LogWrite( basicx::syslog_level::c_info, log_cate, log_info );
 	log_info = "LOG>: 开始系统初始化 ....";
@@ -134,10 +147,10 @@ bool SystemInitialize() {
 		cyberx::CfgBasic* cfg_basic = syscfg->GetCfgBasic();
 
 		if( DEF_NODE_TYPE_MASTER == cfg_basic->m_node_type ) {
-
+			master->Start();
 		}
 		else if( DEF_NODE_TYPE_WORKER == cfg_basic->m_node_type ) {
-
+			worker->Start();
 		}
 
 		// TODO：添加更多初始化任务
@@ -186,6 +199,9 @@ int main( int32_t argc, char* argv[] ) {
 	syscfg->InitGlobalPath(); //
 
 	basicx::Plugins plugins; // 唯一实例 // 03
+
+	cyberx::Master master; // 唯一实例 // 04
+	cyberx::Worker worker; // 唯一实例 // 04
 
 	try {
 #ifdef __OS_WINDOWS__

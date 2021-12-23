@@ -19,32 +19,32 @@
 * Be sure to retain the above copyright notice and conditions.
 */
 
-#ifndef CYBERX_WORKER_WORKER_H
-#define CYBERX_WORKER_WORKER_H
+#ifndef CYBERX_MASTER_MASTER_P_H
+#define CYBERX_MASTER_MASTER_P_H
 
-#include "global/compile.h"
+#include "struct.h"
+#include "master.h"
 
 namespace cyberx {
 
-	class Worker_P;
-
-	class CYBERX_WORKER_EXPIMP Worker {
+	class Master_P {
 	public:
-		Worker();
-		~Worker();
+		Master_P();
+		~Master_P();
 
 	public:
-		static Worker* GetInstance();
+		void LogPrint( basicx::syslog_level log_level, std::string& log_info, int32_t log_show = 0 );
 
 	public:
 		void Start();
 		void Stop();
 
 	private:
-		Worker_P* m_worker_p;
-		static Worker* m_instance;
+		std::string m_log_cate;
+		basicx::SysLog_S* m_syslog;
+		cyberx::SysCfg_S* m_syscfg;
 	};
 
 } // namespace cyberx
 
-#endif // CYBERX_WORKER_WORKER_H
+#endif // CYBERX_MASTER_MASTER_P_H

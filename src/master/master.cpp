@@ -19,8 +19,67 @@
 * Be sure to retain the above copyright notice and conditions.
 */
 
-#include "master.h"
+#include "master_.h"
+
+#define CFG_WORK_THREAD_NUM 1 // 输入输出服务工作线程数
 
 namespace cyberx {
+
+	Master_P::Master_P()
+		: m_log_cate( "<MASTER>" ) {
+		m_syslog = basicx::SysLog_S::GetInstance();
+		m_syscfg = cyberx::SysCfg_S::GetInstance();
+	}
+
+	Master_P::~Master_P() {
+	}
+
+	void Master_P::LogPrint( basicx::syslog_level log_level, std::string& log_info, int32_t log_show/* = 0*/ ) {
+		m_syslog->LogWrite( log_level, m_log_cate, log_info );
+		if( 0 == log_show ) {
+			m_syslog->LogPrint( log_level, m_log_cate, "LOG>: " + log_info ); // 控制台
+		}
+	}
+
+	void Master_P::Start() {
+		std::string log_info = "Master - Start";
+		LogPrint( basicx::syslog_level::n_debug, log_info );
+	}
+
+	void Master_P::Stop() {
+		std::string log_info = "Master - Stop";
+		LogPrint( basicx::syslog_level::n_debug, log_info );
+	}
+
+	Master* Master::m_instance = nullptr;
+
+	Master::Master()
+		: m_master_p( nullptr ) {
+		try {
+			m_master_p = new Master_P();
+		}
+		catch( ... ) {
+		}
+		m_instance = this;
+	}
+
+	Master::~Master() {
+		if( m_master_p != nullptr ) {
+			delete m_master_p;
+			m_master_p = nullptr;
+		}
+	}
+
+	Master* Master::GetInstance() {
+		return m_instance;
+	}
+
+	void Master::Start() {
+		m_master_p->Start();
+	}
+
+	void Master::Stop() {
+		m_master_p->Stop();
+	}
 
 } // namespace cyberx

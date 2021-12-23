@@ -26,13 +26,23 @@
 
 namespace cyberx {
 
+	class Master_P;
+
 	class CYBERX_MASTER_EXPIMP Master {
 	public:
-		Master() {
-		}
+		Master();
+		~Master();
 
-		~Master() {
-		}
+	public:
+		static Master* GetInstance();
+
+	public:
+		void Start();
+		void Stop();
+
+	private:
+		Master_P* m_master_p;
+		static Master* m_instance;
 	};
 
 } // namespace cyberx
