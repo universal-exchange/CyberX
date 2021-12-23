@@ -27,11 +27,11 @@ namespace cyberx {
 	// 软件信息
 	#define DEF_APP_NAME "CyberX" // 系统英文名称
 	#define DEF_APP_NAME_CN "分 布 式 计 算 框 架" // 系统中文名称
-	#define DEF_APP_VERSION "V0.1.0-Beta Build 20211217" // 系统版本号
+	#define DEF_APP_VERSION "V0.1.0-Beta Build 20211223" // 系统版本号
 	#define DEF_APP_DEVELOPER "Developed by the X-Lab." // 开发者声明
 	#define DEF_APP_COMPANY "X-Lab (Shanghai) Co., Ltd." // 公司声明
 	#define DEF_APP_COPYRIGHT "Copyright 2021-2022 X-Lab All Rights Reserved." // 版权声明
-	#define DEF_APP_HOMEURL "http://www.xlab.com" // 主页链接
+	#define DEF_APP_HOMEURL "http://www.universalexchange.com" // 主页链接
 
 	// 网络数据包类型定义
 	#define NW_MSG_ATOM_TYPE_MIN    0 // 网络通信 元操作 类型起始
@@ -78,30 +78,34 @@ namespace cyberx {
 	#define NW_MSG_FUNC_Q_STOCK_TRADE      41003 // 逐笔成交(股票)
 	#define NW_MSG_FUNC_TYPE_MAX           65535 // 网络通信 功能 类型终止
 
-    #define DEF_TYPE_AUTOCALL_BOOSTER         "booster" // Booster
-    #define DEF_TYPE_AUTOCALL_PHOENIX         "phoenix" // Phoenix
-    #define DEF_TYPE_AUTOCALL_SNOWBALL        "snowball" // Snowball
-    #define DEF_TYPE_VANILLA_AMERICAN         "american" // American
-    #define DEF_TYPE_VANILLA_EUROPEAN         "european" // European
-    #define DEF_TYPE_DIGITAL_GAP              "gap" // Gap
-    #define DEF_TYPE_DIGITAL_CASH_OR_NOTHING  "cashornothing" // CashOrNothing
-    #define DEF_TYPE_DIGITAL_ASSET_OR_NOTHING "assetornothing" // AssetOrNothing
-    #define DEF_TYPE_DIGITAL_SUPER_SHARE      "supershare" // SuperShare
-    #define DEF_TYPE_BARRIER_SINGLE           "single" // Single
-    #define DEF_TYPE_BARRIER_DOUBLE           "double" // Double
-    #define DEF_TYPE_STOCHASTIC_MODEL_GBM     "gbm" // GBM
-    #define DEF_TYPE_STOCHASTIC_MODEL_CIR     "cir" // CIR
-    #define DEF_TYPE_STOCHASTIC_MODEL_JDP     "jdp" // JDP
-    #define DEF_TYPE_STOCHASTIC_MODEL_HEST    "hest" // HEST
-    #define DEF_TYPE_STOCHASTIC_MODEL_SABR    "sabr" // SABR
-    #define DEF_TYPE_STOCHASTIC_MODEL_USER    "user" // USER
+	// 模块功能定义
+    #define DEF_NODE_TYPE_MASTER 0 // 
+    #define DEF_NODE_TYPE_WORKER 1 // 
 
-    #define DEF_BARRIER_UP_IN    1 // 向上敲入
-    #define DEF_BARRIER_DOWN_IN  2 // 向下敲入
-    #define DEF_BARRIER_UP_OUT   3 // 向上敲出
-    #define DEF_BARRIER_DOWN_OUT 4 // 向下敲出
+    //#define DEF_TYPE_AUTOCALL_BOOSTER         "booster" // Booster
+    //#define DEF_TYPE_AUTOCALL_PHOENIX         "phoenix" // Phoenix
+    //#define DEF_TYPE_AUTOCALL_SNOWBALL        "snowball" // Snowball
+    //#define DEF_TYPE_VANILLA_AMERICAN         "american" // American
+    //#define DEF_TYPE_VANILLA_EUROPEAN         "european" // European
+    //#define DEF_TYPE_DIGITAL_GAP              "gap" // Gap
+    //#define DEF_TYPE_DIGITAL_CASH_OR_NOTHING  "cashornothing" // CashOrNothing
+    //#define DEF_TYPE_DIGITAL_ASSET_OR_NOTHING "assetornothing" // AssetOrNothing
+    //#define DEF_TYPE_DIGITAL_SUPER_SHARE      "supershare" // SuperShare
+    //#define DEF_TYPE_BARRIER_SINGLE           "single" // Single
+    //#define DEF_TYPE_BARRIER_DOUBLE           "double" // Double
+    //#define DEF_TYPE_STOCHASTIC_MODEL_GBM     "gbm" // GBM
+    //#define DEF_TYPE_STOCHASTIC_MODEL_CIR     "cir" // CIR
+    //#define DEF_TYPE_STOCHASTIC_MODEL_JDP     "jdp" // JDP
+    //#define DEF_TYPE_STOCHASTIC_MODEL_HEST    "hest" // HEST
+    //#define DEF_TYPE_STOCHASTIC_MODEL_SABR    "sabr" // SABR
+    //#define DEF_TYPE_STOCHASTIC_MODEL_USER    "user" // USER
 
-    #define DEF_BARRIER_UOC_DOP  1 // 向上敲出看涨，向下敲出看跌，双鲨
+    //#define DEF_BARRIER_UP_IN    1 // 向上敲入
+    //#define DEF_BARRIER_DOWN_IN  2 // 向下敲入
+    //#define DEF_BARRIER_UP_OUT   3 // 向上敲出
+    //#define DEF_BARRIER_DOWN_OUT 4 // 向下敲出
+
+    //#define DEF_BARRIER_UOC_DOP  1 // 向上敲出看涨，向下敲出看跌，双鲨
 
 } // namespace cyberx
 

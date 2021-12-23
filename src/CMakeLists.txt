@@ -598,6 +598,8 @@ IF (WIN32)
     )
     INSTALL (
         FILES "${PROJECT_SOURCE_DIR}/config/cfg_basic.ini" 
+              "${PROJECT_SOURCE_DIR}/config/cfg_master.ini" 
+              "${PROJECT_SOURCE_DIR}/config/cfg_worker.ini" 
         DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/config"
     )
 ELSEIF ((UNIX) OR (APPLE))
@@ -805,6 +807,8 @@ ELSEIF ((UNIX) OR (APPLE))
     )
     INSTALL (
         FILES "${PROJECT_SOURCE_DIR}/config/cfg_basic.ini" 
+              "${PROJECT_SOURCE_DIR}/config/cfg_master.ini" 
+              "${PROJECT_SOURCE_DIR}/config/cfg_worker.ini" 
         DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/config" 
         # PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ # 644
     )

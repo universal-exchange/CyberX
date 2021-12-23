@@ -43,15 +43,19 @@
 #include "worker/worker.h"
 
 #include "cyberx.h"
+#include "tester.h"
 
 void SystemUninitialize() { // 在控制台事件和单例限制退出时调用会异常
 	try {
-		basicx::Plugins* plugins = basicx::Plugins::GetInstance(); // 02
+		basicx::Plugins* plugins = basicx::Plugins::GetInstance(); // 03
 		if( plugins != nullptr ) {
 			plugins->~Plugins();
 		}
 
-		// SysCfg
+		cyberx::SysCfg_S* syscfg = cyberx::SysCfg_S::GetInstance(); // 02
+		if( syscfg != nullptr ) {
+			syscfg->~SysCfg_S();
+		}
 
 		basicx::SysLog_S* syslog = basicx::SysLog_S::GetInstance(); // 01
 		if( syslog != nullptr ) {
@@ -101,10 +105,18 @@ void ConsoleEventsSet() {
 #endif
 
 bool SystemInitialize() {
+	if( false ) {
+		std::this_thread::sleep_for( std::chrono::seconds( 1 ) ); // 避免 CMD 输出被打乱
+		cyberx::Test_CyberX();
+		return true;
+	}
+
 	std::string log_info;
 	std::string log_cate = "<SYSTEM_INIT>";
 
 	basicx::SysLog_S* syslog = basicx::SysLog_S::GetInstance();
+	cyberx::SysCfg_S* syscfg = cyberx::SysCfg_S::GetInstance();
+	basicx::Plugins* plugins = basicx::Plugins::GetInstance();
 
     log_info = "开始系统初始化 ...\r\n";
 	syslog->LogWrite( basicx::syslog_level::c_info, log_cate, log_info );
@@ -114,8 +126,19 @@ bool SystemInitialize() {
 	try {
 		log_info = "LOG>: 读取 系统参数配置 ....";
 		syslog->LogPrint( basicx::syslog_level::c_info, log_cate, log_info );
+		if( false == syscfg->ReadCfgBasic( syscfg->GetPath_CfgBasic() ) ) {
+			log_info = "LOG>: 读取 系统参数配置 失败！";
+			syslog->LogPrint( basicx::syslog_level::c_error, log_cate, log_info );
+			return false;
+		}
+		cyberx::CfgBasic* cfg_basic = syscfg->GetCfgBasic();
 
-		std::this_thread::sleep_for( std::chrono::seconds( 1 ) ); // 避免 CMD 输出被打乱
+		if( DEF_NODE_TYPE_MASTER == cfg_basic->m_node_type ) {
+
+		}
+		else if( DEF_NODE_TYPE_WORKER == cfg_basic->m_node_type ) {
+
+		}
 
 		// TODO：添加更多初始化任务
 
@@ -157,6 +180,12 @@ int main( int32_t argc, char* argv[] ) {
 	syslog->InitSysLog( DEF_APP_NAME, DEF_APP_VERSION, DEF_APP_COMPANY, DEF_APP_COPYRIGHT );
 	syslog->PrintSysInfo();
 	syslog->WriteSysInfo();
+
+	cyberx::SysCfg_S syscfg_s; // 唯一实例 // 02
+	cyberx::SysCfg_S* syscfg = cyberx::SysCfg_S::GetInstance();
+	syscfg->InitGlobalPath(); //
+
+	basicx::Plugins plugins; // 唯一实例 // 03
 
 	try {
 #ifdef __OS_WINDOWS__
