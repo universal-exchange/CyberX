@@ -1,7 +1,7 @@
 # CyberX
-V0.1.3-Beta Build 20220225
+V0.2.0-Beta Build 20230603
 
-© 2021-2022 Xu Rendong. All Rights Reserved.
+© 2021-2023 Xu Rendong. All Rights Reserved.
 
 ### Project Summary
 Distributed Heterogeneous Computing Framework.
