@@ -1,6 +1,5 @@
 # CyberX
-
-V0.2.0-Beta Build 20230603
+V0.2.1-Beta Build 20230608
 
 © 2021-2023 Xu Rendong. All Rights Reserved.
 
