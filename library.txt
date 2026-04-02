@@ -1,6 +1,6 @@
 
 Library: CMake
-Version: 3.30.1(W), 3.30.1(L)
+Version: 3.31.0(W), 3.31.0(L)
 License: BSD
 Website: https://cmake.org
 
